@@ -1,9 +1,37 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">	</head>
 <body>
 <div class="container">
+    <div class="jumbotron jumbotron-fluid mb-1">
+        <h1 class="display-4 mb-0 ml-4">Meus Pedidos</h1>
+        <p class="lead ml-4">Página de Pedidos.</p>
+    </div>
+
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content between mb-1">
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="#">Home</a>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Aguardando</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Aprovado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Entregues</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/pedido/formulario"> <button type="button" class="btn btn-outline-secondary my-2 my-sm-0">Novo</button></a>
+    </nav>
+
     <div class="card" th:each="pedido : ${pedidos}">
         <div class="card-header" th:text="${pedido.nomeProduto}">Nome do Produto</div>
         <div class="card-body">

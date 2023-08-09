@@ -22,6 +22,13 @@
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="247e471f-ffa6-4fc6-b9fd-41c599c98b18" dataset="public.pedido" active-filter-id="EMPTY_FILTER">
+      <filter id="32ef6fd6-2a09-4458-b6e0-f8aeb4895723" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>

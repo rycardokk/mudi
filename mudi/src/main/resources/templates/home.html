@@ -1,45 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">	</head>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
 <body>
-<div class="container">
-    <div class="jumbotron jumbotron-fluid mb-1">
-        <h1 class="display-4 mb-0 ml-4">Meus Pedidos</h1>
-        <p class="lead ml-4">Página de Pedidos.</p>
-    </div>
+<div th:replace="~{base :: logo}"></div>
 
-    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content between mb-1">
-        <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="#">Home</a>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Todos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Aguardando</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Aprovado</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Entregues</a>
-                </li>
-            </ul>
+<div class="container">
+    <div th:replace="~{base :: titulo('Meus Pedidos')}"></div>
+
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a th:classappend="${status} == null ? 'active'" class="nav-item nav-link" href="/home">Todos</a>
+            <a th:classappend="${status} == 'aguardando' ? 'active'" class="nav-item nav-link" href="/home/aguardando">Aguardando</a>
+            <a th:classappend="${status} == 'aprovado' ? 'active'" class="nav-item nav-link" href="/home/aprovado">Aprovado</a>
+            <a th:classappend="${status} == 'entregue' ? 'active'" class="nav-item nav-link" href="/home/entregue">Entregue</a>
         </div>
-        <a href="/pedido/formulario"> <button type="button" class="btn btn-outline-secondary my-2 my-sm-0">Novo</button></a>
+        <a href="/pedido/formulario"><button class="btn btn-outline-secondary my-2 my-sm-0">Novo</button></a>
     </nav>
 
-    <div class="card" th:each="pedido : ${pedidos}">
-        <div class="card-header" th:text="${pedido.nomeProduto}">Nome do Produto</div>
+    <div class="card mb-3" th:each="pedido : ${pedidos}">
+        <th:block th:switch = "${#strings.toString(pedido.status)}">
+            <div th:case= "'APROVADO'"    th:text="${pedido.nomeProduto}"    class="card-header alert-success">Nome do Produto</div>
+            <div th:case= "'AGUARDANDO'"    th:text="${pedido.nomeProduto}"    class="card-header alert-warning">Nome do Produto</div>
+            <div th:case= "'ENTREGUE'"    th:text="${pedido.nomeProduto}"    class="card-header alert-dark">Nome do Produto</div>
+        <th:block>
+
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-sm-8 mb-3">
                     <div class="row ">
-                        <div class="col-md-5">Valor: <span th:text="${pedido.valorNegociado}">200,99</span></div>
-                        <div class="col-md-6">Data da entrega: <span th:text="${pedido.dataDaEntrega}">10/02/2020</span></div>
+                        <div class="col-md-5">Valor: <span th:if="${pedido.valorNegociado} != null" th:text="${'R$ ' + #numbers.formatDecimal(pedido.valorNegociado, 3, 'POINT', 2, 'COMMA')}">200,99</span></div>
+                        <div class="col-md-6">Data da entrega: <span th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MM/yyyy')}">10/02/2020</span></div>
                     </div>
 
                     <div>Produto</div>

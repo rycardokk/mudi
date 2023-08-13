@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" href="../static/css/styles.css"/>
+</head>
+
+<div th:fragment="logo" class="logo-container mb-3 p-3 d-flex justify-content-sm-between">
+    <span class="logo">mudi</span>
+    <span class="mt-3">
+        <a class="text-light" th:if="${not #authorization.expression('isAuthenticated()')}"
+           th:href="@{/login}">Login</a>
+        <a class="text-light" th:if="${#authorization.expression('isAuthenticated()')}"
+           href="#" onclick="document.querySelector('#form-logout').submit();">Logout</a>
+        <form id="form-logout" th:action="@{/logout}" method="post"></form>
+    </span>
+</div>
+
+<div th:fragment="titulo(valor)" class="jumbotron jumbotron-fluid mb-1">
+    <h1 class="display-4 mb-0 ml-4" th:text="${valor}"></h1>
+</div>
+</html>

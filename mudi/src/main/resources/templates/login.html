@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <style>
+        .logo-container{
+            background-color: #47bcff;
+        }
+
+        .logo {
+            font-family: 'Handlee', cursive;
+            color: aliceblue;
+            font-size: 2.5rem;
+        }
+
+        .mt-3 {
+            color: aliceblue;
+        }
+
+        .form-group{
+            color: black;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div th:replace="~{fragments :: logo}"></div>
+
+    <div class="container">
+        <div th:replace="~{fragments :: titulo('Login')}"></div>
+
+
+        <div class="card mb-3">
+            <form th:action="@{/login}" class="card-body" method="post">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input name="username"  class="form-control" placeholder="usuário"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" name="password" class="form-control" placeholder="senha"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

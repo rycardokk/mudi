@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails, Serializable {
+public class UserModel implements UserDetails, Serializable {
 
     private static final long serialVersionUID =1L;
 
@@ -24,11 +25,20 @@ public class User implements UserDetails, Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles;
     }
 
     @Override

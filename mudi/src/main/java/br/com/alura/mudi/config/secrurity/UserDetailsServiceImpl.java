@@ -1,13 +1,16 @@
 package br.com.alura.mudi.config.secrurity;
 
-import br.com.alura.mudi.model.User;
+import br.com.alura.mudi.model.UserModel;
 import br.com.alura.mudi.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     final UserRepository userRepository;
@@ -18,8 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userModel = userRepository.findByUsername(username)
+        UserModel userModel = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        return userModel;
+        return new User(userModel.getUsername(), userModel.getPassword(), true, true, true, true, userModel.getAuthorities());
     }
 }

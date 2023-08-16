@@ -1,5 +1,6 @@
 package br.com.alura.mudi.model;
 
+import br.com.alura.mudi.enums.StatusPedido;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -20,6 +21,9 @@ public class Pedido {
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserModel user;
 
     public String getNomeProduto() {
         return nomeProduto;

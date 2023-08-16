@@ -1,7 +1,7 @@
 package br.com.alura.mudi.dto;
 
 import br.com.alura.mudi.model.Pedido;
-import br.com.alura.mudi.model.StatusPedido;
+import br.com.alura.mudi.enums.StatusPedido;
 import jakarta.validation.constraints.NotBlank;
 
 public class RequisicaoNovoPedido {

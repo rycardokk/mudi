@@ -2,6 +2,7 @@ package br.com.alura.mudi.model;
 
 import br.com.alura.mudi.enums.StatusPedido;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,8 +23,13 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     private UserModel user;
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
 
     public String getNomeProduto() {
         return nomeProduto;

@@ -1,5 +1,6 @@
 package br.com.alura.mudi.controller;
 
+
 import br.com.alura.mudi.model.Pedido;
 import br.com.alura.mudi.enums.StatusPedido;
 import br.com.alura.mudi.repository.PedidoRepository;
@@ -16,22 +17,23 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("usuario")
+public class UsuarioController {
 
     @Autowired
     private PedidoRepository repository;
 
-    @GetMapping()
-    public String home(Model model) {
-        List<Pedido> pedidos = repository.findAll();
+    @GetMapping("pedido")
+    public String home(Model model, Principal principal) {
+        List<Pedido> pedidos = repository.findAllByUsuario(principal.getName());
         model.addAttribute("pedidos", pedidos);
         return "usuario/home";
     }
 
-    @GetMapping("/{status}")
-    public String porStatus(@PathVariable("status") String status, Model model) {
-        List<Pedido> pedidos = repository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
+    @GetMapping("pedido/{status}")
+    public String porStatus(@PathVariable("status") String status, Model model, Principal principal) {
+        List<Pedido> pedidos = repository
+                .findByStatusUser(StatusPedido.valueOf(status.toUpperCase()), principal.getName());
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("status", status);
         return "usuario/home";
@@ -39,7 +41,8 @@ public class HomeController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String onError() {
-        return "redirect:/home";
+        return "redirect:/usuario/home";
     }
 }
+
 

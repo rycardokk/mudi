@@ -29,6 +29,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/home").permitAll()
+                        //.requestMatchers("/pedido/formulario").hasAnyAuthority(ADM)
                         .anyRequest().authenticated()
 
                 )
@@ -37,8 +39,11 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/usuario/pedido", true)
                         .permitAll()
                 )
-                .logout(logout -> logout.logoutUrl("/logout"));
-
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/home").deleteCookies("JSESSIONID")
+                ).exceptionHandling( (ex) -> ex
+                        .accessDeniedPage("/negado")
+                );
         return http.build();
     }
 

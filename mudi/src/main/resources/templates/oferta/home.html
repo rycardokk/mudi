@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <style>
+        .logo-container{
+            background-color: #47bcff;
+        }
+
+        .logo {
+            font-family: 'Handlee', cursive;
+            color: aliceblue;
+            font-size: 2.5rem;
+        }
+
+        .mt-3 {
+            color: aliceblue;
+        }
+
+        .form-group{
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments :: logo}"></div>
+
+<div class="container">
+    <div th:replace="~{fragments :: titulo('Últimos Pedidos')}"></div>
+
+    <div class="card mb-3" th:each="pedido : ${pedidos}">
+        <div th:text="${pedido.nomeProduto}" class="card-header alert-dark">Nome do Produto</div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-8 mb-3">
+                    <div class="row ">
+                        <div class="col-md-5">Valor:
+                            <span th:if="${pedido.valorNegociado} != null"
+                                  th:text="${'R$ ' + #numbers.formatDecimal(pedido.valorNegociado, 3, 'POINT', 2, 'COMMA')}">200,99
+                            </span>
+                        </div>
+                        <div class="col-md-6">Data da entrega: <span th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MM/yyyy')}">10/02/2020</span></div>
+                    </div>
+
+                    <div>Produto</div>
+                    <div> <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto" /></div>
+
+                    <div>Descrição</div>
+                    <div>
+                        <textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <div>
+                        <img class="img-thumbnail" th:src="${pedido.urlImagem}" src="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
